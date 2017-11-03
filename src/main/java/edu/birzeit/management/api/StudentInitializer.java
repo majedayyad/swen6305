@@ -33,9 +33,8 @@ public class StudentInitializer implements ServletContextListener {
 				fileOutputStream.write(contentInBytes);
 				fileOutputStream.flush();
 				fileOutputStream.close();
-			}else{
-				System.out.println("PATH: " + file.getAbsolutePath());
 			}
+			System.out.println("PATH: " + file.getAbsolutePath());
 
 		} catch (Exception exception) {
 			exception.printStackTrace();

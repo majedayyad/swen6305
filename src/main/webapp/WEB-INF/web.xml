@@ -16,6 +16,10 @@
 		<servlet-name>StudentAPI</servlet-name>
 		<servlet-class>edu.birzeit.management.api.StudentAPI</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>StudentsAPI</servlet-name>
+		<servlet-class>edu.birzeit.management.api.StudentsAPI</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>TestAPI</servlet-name>
@@ -25,5 +29,9 @@
 	<servlet-mapping>
 		<servlet-name>StudentAPI</servlet-name>
 		<url-pattern>/students/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>StudentsAPI</servlet-name>
+		<url-pattern>/students</url-pattern>
 	</servlet-mapping>
 </web-app>

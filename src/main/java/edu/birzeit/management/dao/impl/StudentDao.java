@@ -6,6 +6,8 @@ import edu.birzeit.management.dao.interfaces.IStudentDao;
 import edu.birzeit.management.entities.Student;
 
 /**
+ * This is a data access layer class
+ * Stands for M in MVC
  * @author arouri
  *
  */
