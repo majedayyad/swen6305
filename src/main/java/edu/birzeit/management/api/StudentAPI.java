@@ -21,9 +21,30 @@ import edu.birzeit.management.utils.JsonConverter;
 public class StudentAPI extends HttpServlet {
 
 	private static final long serialVersionUID = 4976855131174170973L;
+	
+	/*
+	 * TODO:// Team Exterminators
+	 * Delete existing Student  
+	 */
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	
+	}
+	
+	/*
+	 * TODO:// Team Infinity
+	 * Create new Student
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	}
+	
 
 	/*
 	 * The request has the shape of PUT /students/{id}
+	 * This is for aplpha team
 	 */
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,12 +62,12 @@ public class StudentAPI extends HttpServlet {
 		
 		// Call component to handle the student
 		IStudentManager studentManager = new StudentManager();
-		studentManager.updateStudent(student);
+		boolean isSuccess = studentManager.updateStudent(student);
 		
-		// Print success message
+		// Print response message
 		PrintWriter out = response.getWriter();
 		Status status = new Status();
-		status.setStatus(StatusCode.SUCCESS);
+		status.setStatus(isSuccess ? StatusCode.SUCCESS : StatusCode.FAILURE);
 		out.println(JsonConverter.convertToJson(status));
 		response.setContentType("application/json");
 	}

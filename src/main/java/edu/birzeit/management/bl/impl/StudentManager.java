@@ -6,6 +6,8 @@ import edu.birzeit.management.dao.interfaces.IStudentDao;
 import edu.birzeit.management.entities.Student;
 
 /**
+ * This is a business logic class
+ * Stands for C in MVC
  * @author arouri
  *
  */
