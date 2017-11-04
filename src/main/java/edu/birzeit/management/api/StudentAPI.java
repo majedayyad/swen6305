@@ -1,9 +1,6 @@
 package edu.birzeit.management.api;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -21,49 +18,64 @@ import edu.birzeit.management.utils.JsonConverter;
 public class StudentAPI extends HttpServlet {
 
 	private static final long serialVersionUID = 4976855131174170973L;
-	
-	/*
-	 * TODO:// Team Exterminators
-	 * Delete existing Student  
-	 */
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-	
-	}
-	
-	/*
-	 * TODO:// Team Infinity
-	 * Create new Student
-	 */
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-	}
-	
 
 	/*
-	 * The request has the shape of PUT /students/{id}
-	 * This is for aplpha team
+	 * TODO:// Team Exterminators Delete existing Student
 	 */
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// Get student id
 		String pathInfo = request.getPathInfo();
 		String[] pathParts = pathInfo.split("/");
 		String id = pathParts[1];
-		
+		Student student = new Student();
+		student.setId(id);
+
+		// Call component to handle the student
+		IStudentManager studentManager = new StudentManager();
+		studentManager.deleteStudent(student);
+
+		// Print response message
+		PrintWriter out = response.getWriter();
+		Status status = new Status();
+		status.setStatus(StatusCode.SUCCESS);
+		out.println(JsonConverter.convertToJson(status));
+		response.setContentType("application/json");
+
+	}
+
+	/*
+	 * TODO:// Team Infinity Create new Student
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	}
+
+	/*
+	 * The request has the shape of PUT /students/{id} This is for aplpha team
+	 */
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// Get student id
+		String pathInfo = request.getPathInfo();
+		String[] pathParts = pathInfo.split("/");
+		String id = pathParts[1];
+
 		// Get student request body
-		String body = this.getBody(request);
+		String body = RestUtil.getBody(request);
 		Student student = JsonConverter.convertToObject(body, Student.class);
 		student.setId(id);
 		System.out.println(student);
-		
+
 		// Call component to handle the student
 		IStudentManager studentManager = new StudentManager();
 		boolean isSuccess = studentManager.updateStudent(student);
-		
+
 		// Print response message
 		PrintWriter out = response.getWriter();
 		Status status = new Status();
@@ -74,46 +86,6 @@ public class StudentAPI extends HttpServlet {
 
 	public void destroy() {
 
-	}
-
-	/**
-	 * Read request body
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 */
-	public String getBody(HttpServletRequest request) throws IOException {
-
-		String body = null;
-		StringBuilder stringBuilder = new StringBuilder();
-		BufferedReader bufferedReader = null;
-
-		try {
-			InputStream inputStream = request.getInputStream();
-			if (inputStream != null) {
-				bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-				char[] charBuffer = new char[128];
-				int bytesRead = -1;
-				while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-					stringBuilder.append(charBuffer, 0, bytesRead);
-				}
-			} else {
-				stringBuilder.append("");
-			}
-		} catch (IOException ex) {
-			throw ex;
-		} finally {
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (IOException ex) {
-					throw ex;
-				}
-			}
-		}
-
-		body = stringBuilder.toString();
-		return body;
 	}
 
 }
